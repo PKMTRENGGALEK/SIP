@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIP | PKM TGLK</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- DataTables Buttons CSS & JS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Toggle Mobile -->
+    <div class="d-md-none p-2 bg-white shadow-sm">
+      <button
+        class="btn btn-outline-primary"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#sidebarOffcanvas"
+      >
+        <i class="bi bi-list"></i> Menu
+      </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar shadow d-none d-md-block">
+      <h5 class="mb-4 text-success"><u>Puskesmas Trenggalek</u></h5>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="dashboard.html"
+            ><i class="bi bi-speedometer2"></i> Dashboard</a
+          >
+        </li>
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#profile"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i> Profile
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="profile">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="dokumenprofile.html"
+                  ><i class="bi bi-file-earmark-richtext"></i> Dokumen
+                  Profile</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="datasasaran.html"
+                  ><i class="bi bi-file-earmark-richtext"></i> Data Sasaran
+                  Program</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#submenu1"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i> Dokumen
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="submenu1">
+            <ul class="nav flex-column submenu">
+              <span class="text-start textdanger">Data Eksternal</span>
+              <hr />
+              <li class="nav-item">
+                <a class="nav-link" href="dokumeneksternal.html"
+                  ><i class="bi bi-file-earmark-richtext"></i> Dokumen
+                  Eksternal</a
+                >
+              </li>
+              <span class="text-start textdanger">Data Internal</span>
+              <hr />
+              <li class="nav-item">
+                <a class="nav-link" href="dokumeninternal.html"
+                  ><i class="bi bi-file-earmark-pdf-fill"></i> SK Internal</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="pedomaninternal.html"
+                  ><i class="bi bi-file-earmark-richtext"></i> Pedoman
+                  Internal</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="sop.html"
+                  ><i class="bi bi-file-earmark-richtext"></i> SOP
+                </a>
+              </li>
+              <hr />
+              <li class="nav-item">
+                <a class="nav-link" href="masterdokumen.html"
+                  ><i class="bi bi-file-earmark-pdf-fill"></i> Master Dokumen</a
+                >
+              </li>
+              <!-- <li class="nav-item"><a class="nav-link" href="#">Profile</a></li> -->
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#PTP"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i> PTP
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="PTP">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="renstra.html">Renstra</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="ruk.html">RUK</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="rpk.html">RPK</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu2"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i> Monitoring Kinerja
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="menu2">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="iku.html">IKU</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://pkmtrenggalek.github.io/PKP-2025/"
+                  >PKP Puskesmas</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="404.html">PKP Dinkes</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#kinerja"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i> Laporan Kinerja
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="kinerja">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="blud.html">BLUD</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="404.html">PKP</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="404.html">MUTU</a>
+              </li>
+            </ul>
+          </div>
+        </li> -->
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#mutu"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i> MUTU
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="mutu">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://bit.ly/MONEV_MUTU_2025"
+                  target="_blank"
+                  >Monev Mutu 2025</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://bit.ly/EVALUASI_PELAKSANAAN_RTL"
+                  >Evaluasi Pelaksanaan RTL</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://bit.ly/CEK_LIST_SUPERSIVI_MUTU"
+                  >Cecklist Supervisi Mutu</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://bit.ly/EVALUASI_URAIAN_TUGAS_TIM_TEKNIS_MUTU_2024"
+                  >Evaluasi Uraian Tugas Tim Teknis Mutu 2024</a
+                >
+              </li>
+              <!--  -->
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu3"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i>Kepegawaian
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="menu3">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="link_laporan.html"
+                  >Link Laporan/Aplikasi</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="duk.html">DUK Puskesmas</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="http://192.168.1.128/cuti_puskesmas_trenggalek/login.html"
+                  target="_blank"
+                  >Cuti Puskesmas</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="bangkom.html"
+                  >Pengembangan Kompetensi</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu4"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i>Surat
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="menu4">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="arsipsuratmasuk.html"
+                  ><i class="bi bi-envelope-fill"></i> Arsip Surat Masuk</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="arsipsuratkeluar.html"
+                  ><i class="bi bi-envelope-paper"></i> Arsip Surat Keluar</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu5"
+            aria-expanded="false"
+          >
+            <i class="bi bi-palette2"></i>PZI
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="menu5">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="PZI2024.html"
+                  ><i class="bi bi-palette2"></i>PZI 2024</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="PZI2025.html"
+                  ><i class="bi bi-palette2"></i> PZI 2025</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://drive.google.com/drive/folders/1-7RjWH1Jp0T5mQtpYcTTV9e6wnKrywI3 "
+                  target="_blank"
+                  ><i class="bi bi-palette2"></i>Dokumen PZI</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="inovasi.html"
+            ><i class="bi bi-graph-up-arrow"></i> Inovasi</a
+          >
+        </li>
+        <li class="nav-item">
+          <button
+            class="menu-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#ilp"
+            aria-expanded="false"
+          >
+            <i class="bi bi-circle"></i>ILP/ASDK/CKG
+            <i class="bi bi-chevron-down float-end"></i>
+          </button>
+          <div class="collapse" id="ilp">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" href="https://asdk.kemkes.go.id/"
+                  >Link ASDK</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://pkmtrenggalek.github.io/skrining "
+                  >Skrining ILP</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://pkmtrenggalek.github.io/Dashboardklaster2-3/"
+                  target="_blank"
+                  >PKG</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-primary">Puskesmas Trenggalek</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="dashboard.html">
+              <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-profile"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> Profile
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-profile">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="dokumenprofile.html"
+                    ><i class="bi bi-file-earmark-richtext"></i> Dokumen
+                    Profile</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="datasasaran.html"
+                    ><i class="bi bi-file-earmark-richtext"></i> Data Sasaran
+                    Program</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-dokumen"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> Dokumen
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-dokumen">
+              <ul class="nav flex-column submenu">
+                <span class="text-start text-danger">Data Eksternal</span>
+                <hr />
+                <li class="nav-item">
+                  <a class="nav-link" href="dokumeneksternal.html"
+                    ><i class="bi bi-file-earmark-richtext"></i> Dokumen
+                    Eksternal</a
+                  >
+                </li>
+                <span class="text-start text-danger">Data Internal</span>
+                <hr />
+                <li class="nav-item">
+                  <a class="nav-link" href="dokumeninternal.html"
+                    ><i class="bi bi-file-earmark-pdf-fill"></i> SK Internal</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pedomaninternal.html"
+                    ><i class="bi bi-file-earmark-richtext"></i> Pedoman
+                    Internal</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="sop.html"
+                    ><i class="bi bi-file-earmark-richtext"></i> SOP</a
+                  >
+                </li>
+                <hr />
+                <li class="nav-item">
+                  <a class="nav-link" href="masterdokumen.html"
+                    ><i class="bi bi-file-earmark-pdf-fill"></i> Master
+                    Dokumen</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-ptp"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> PTP
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-ptp">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="renstra.html">Renstra</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="ruk.html">RUK</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="rpk.html">RPK</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-monitoring"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> Monitoring Kinerja
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-monitoring">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="iku.html">IKU</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="404.html">PKP Puskesmas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="404.html">PKP Dinkes</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-kinerja"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> Laporan Kinerja
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-kinerja">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="blud.html">BLUD</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="404.html">PKP</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="404.html">MUTU</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-mutu"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> MUTU
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-mutu">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="404.html">PPI</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="manrisk.html">MANRISK</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="audit.html">AUDIT</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="k3.html">K3</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="mfk.html">MFK</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pkpkm.html">PKPKM</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="rtm.html">RTM</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-kepegawaian"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> Kepegawaian
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-kepegawaian">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="link_laporan.html"
+                    >Link Laporan/Aplikasi</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="duk.html">DUK Puskesmas</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="http://192.168.1.128/cuti_puskesmas_trenggalek/login.html"
+                    target="_blank"
+                    >Cuti Puskesmas</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="bangkom.html"
+                    >Pengembangan Kompetensi</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-surat"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i> Surat
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-surat">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="arsipsuratmasuk.html"
+                    ><i class="bi bi-envelope-fill"></i> Arsip Surat Masuk</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="arsipsuratkeluar.html"
+                    ><i class="bi bi-envelope-paper"></i> Arsip Surat Keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#oc-pzi"
+              aria-expanded="false"
+            >
+              <i class="bi bi-palette2"></i> PZI
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="oc-pzi">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="PZI2024.html"
+                    ><i class="bi bi-palette2"></i> PZI 2024</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="PZI2025.html"
+                    ><i class="bi bi-palette2"></i> PZI 2025</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="https://drive.google.com/drive/folders/1-7RjWH1Jp0T5mQtpYcTTV9e6wnKrywI3 "
+                    target="_blank"
+                    ><i class="bi bi-palette2"></i>Dokumen PZI</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="inovasi.html">
+              <i class="bi bi-graph-up-arrow"></i> Inovasi
+            </a>
+          </li>
+          <li class="nav-item">
+            <button
+              class="menu-toggle"
+              data-bs-toggle="collapse"
+              data-bs-target="#ilp"
+              aria-expanded="false"
+            >
+              <i class="bi bi-circle"></i>ILP/ASDK/CKG
+              <i class="bi bi-chevron-down float-end"></i>
+            </button>
+            <div class="collapse" id="ilp">
+              <ul class="nav flex-column submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="https://asdk.kemkes.go.id/ "
+                    >Link ASDK</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="https://pkmtrenggalek.github.io/skrining "
+                    >Skrining ILP</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pkg.html" target="_blank">PKG</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="content">
+      <div class="text-center text-muted">Memuat halaman...</div>
+      <div id="toastContainer"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      © 2025 Puskesmas Trenggalek | <span style="font-size: 10px">@yoga</span>.
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+      <div
+        id="liveToast"
+        class="toast align-items-center text-white bg-primary border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">🎉 Notifikasi berhasil ditampilkan!</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Memuat...</span>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- jQuery (Wajib sebelum DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+    <!-- FileSaver & PDFMake (dibutuhkan untuk export Excel & PDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+    <!-- DataTables CSS (juga jangan lupa di bagian <head>) -->
+    <link
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="myjs.js"></script>
+  </body>
+</html>
