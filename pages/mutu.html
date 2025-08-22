@@ -1,0 +1,67 @@
+<!-- mutu.html -->
+<div class="mutu-container">
+  <h2 class="mutu-title">📊 Halaman Mutu</h2>
+  <div class="mutu-grid">
+    <div class="mutu-card">
+      <h3>Monev Mutu</h3>
+      <p>Pemantauan & evaluasi indikator mutu layanan.</p>
+    </div>
+    <div class="mutu-card">
+      <h3>Evaluasi Pelaksanaan RTL</h3>
+      <p>Review hasil tindak lanjut perbaikan layanan.</p>
+    </div>
+    <div class="mutu-card">
+      <h3>Checklist Supervisi Mutu</h3>
+      <p>Instrumen checklist untuk supervisi internal.</p>
+    </div>
+    <div class="mutu-card">
+      <h3>Evaluasi Uraian Tugas Tim Teknis Mutu 2024</h3>
+      <p>Evaluasi uraian tugas & capaian tim teknis tahun 2024.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.mutu-container {
+  padding: 20px;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.mutu-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.mutu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.mutu-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mutu-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.mutu-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #34495e;
+}
+
+.mutu-card p {
+  font-size: 14px;
+  color: #555;
+}
+</style>

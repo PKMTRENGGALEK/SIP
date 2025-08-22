@@ -82,6 +82,9 @@ function loadPage(page) {
         case "arsipsuratkeluar.html":
           initsuratkeluar?.();
           break;
+        case "mutu.html":
+          initmutu?.();
+          break;
         case "pkg.html":
           initchart?.();
           break;
