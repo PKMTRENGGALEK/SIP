@@ -83,7 +83,7 @@ function loadPage(page) {
           initsuratkeluar?.();
           break;
         case "mutu.html":
-          initmutu?.();
+          // initmutu?.();
           break;
         case "pkg.html":
           initchart?.();
