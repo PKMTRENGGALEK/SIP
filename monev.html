@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Monev Mutu - Puskesmas Trenggalek</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- DataTables -->
+    <link
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/rowgroup/1.4.1/css/rowGroup.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: #f9fafb;
+      }
+      .navbar-brand {
+        font-weight: bold;
+      }
+      .table thead th {
+        text-align: center;
+        vertical-align: middle;
+      }
+      footer {
+        background: #f1f1f1;
+        padding: 20px;
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      /* Warna untuk grouping */
+      .group-induk td {
+        background-color: #0d6efd !important; /* biru */
+        color: white !important;
+        font-weight: bold;
+      }
+      .group-sub td {
+        background-color: #f8f9fa !important; /* abu */
+        font-weight: 600;
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="#">🏥 Puskesmas Trenggalek</a>
+        <div class="ms-auto">
+          <a href="index.html" class="btn btn-primary">🏠 Beranda</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container my-5">
+      <h3 class="text-center mb-4">📊 Monitoring & Evaluasi Mutu</h3>
+
+      <div class="table-responsive" style="font-size: 11px">
+        <table
+          class="table table-bordered table-striped align-middle"
+          id="monevTable"
+        >
+          <thead class="table-success text-center align-middle">
+            <tr>
+              <th>Jenis Variabel</th>
+              <th>Target 2025</th>
+              <th>Satuan Sasaran</th>
+              <th>Total Sasaran</th>
+              <th>Target Sasaran/Tahun</th>
+              <th>Target/Bulan</th>
+              <th>Pencapaian</th>
+              <th>% Cakupan Riil</th>
+              <th>Ketercapaian Target</th>
+              <th>Jan</th>
+              <th>Feb</th>
+              <th>Mar</th>
+              <th>Apr</th>
+              <th>Mei</th>
+              <th>Juni</th>
+              <th>Juli</th>
+              <th>Agst</th>
+              <th>Sept</th>
+              <th>Okt</th>
+              <th>Nov</th>
+              <th>Des</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="21" class="text-center">Memuat data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p class="mb-0">
+        &copy; 2025 Puskesmas Trenggalek - Monitoring & Evaluasi Mutu
+      </p>
+    </footer>
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.4.1/js/dataTables.rowGroup.min.js"></script>
+
+    <script>
+      async function initTable() {
+        const res = await fetch(
+          "https://script.google.com/macros/s/AKfycbzNHX9I5PvB9ncPudkn19jNwxwTxyzRwpU7VKbU2AokyQZ8GGrvxtfr77YsnMQo_bo4/exec"
+        );
+        const data = await res.json();
+
+        renderTable(data);
+      }
+
+      function renderTable(rows) {
+        const table = document.getElementById("monevTable");
+        const tbody = table.querySelector("tbody");
+        tbody.innerHTML = "";
+
+        // 🔹 Kelompokkan data berdasarkan Induk & Sub
+        const grouped = {};
+        rows.forEach((row) => {
+          const induk = row["Induk"] || "Lainnya";
+          const sub = row["Sub"] || "Lainnya";
+          if (!grouped[induk]) grouped[induk] = {};
+          if (!grouped[induk][sub]) grouped[induk][sub] = [];
+          grouped[induk][sub].push(row);
+        });
+
+        // 🔹 Loop hasil grouping
+        Object.keys(grouped).forEach((induk) => {
+          // Tambah header Induk
+          const trInduk = document.createElement("tr");
+          trInduk.innerHTML = `<td colspan="21" class="group-induk">${induk}</td>`;
+          tbody.appendChild(trInduk);
+
+          Object.keys(grouped[induk]).forEach((sub) => {
+            // Kalau Sub kosong / "Lainnya" → skip
+            if (
+              sub &&
+              sub !== "Lainnya" &&
+              induk !== "INDIKATOR MUTU PELAYANAN (IMPEL)"
+            ) {
+              const trSub = document.createElement("tr");
+              trSub.innerHTML = `<td colspan="21" class="group-sub">${sub}</td>`;
+              tbody.appendChild(trSub);
+            }
+
+            grouped[induk][sub].forEach((row) => {
+              const tr = document.createElement("tr");
+              tr.innerHTML = `
+                  <td>${row["Jenis Variabel"] || ""}</td>
+                  <td>${row["Target Tahun 2025 (dalam %)"] || ""}</td>
+                  <td>${row["Satuan sasaran"] || ""}</td>
+                  <td>${row["Total Sasaran"] || ""}</td>
+                  <td>${row["Target Sasaran/tahun"] || ""}</td>
+                  <td>${row["Target/bulan"] || ""}</td>
+                  <td>${row["Pencapaian (dalam satuan sasaran)"] || ""}</td>
+                  <td>${row["%Cakupan Riil"] || ""}</td>
+                  <td>${row["Ketercapaian Target Tahun n"] || ""}</td>
+                  <td>${row["Jan"] || ""}</td>
+                  <td>${row["Feb"] || ""}</td>
+                  <td>${row["Mar"] || ""}</td>
+                  <td>${row["Apr"] || ""}</td>
+                  <td>${row["Mei"] || ""}</td>
+                  <td>${row["Juni"] || ""}</td>
+                  <td>${row["Juli"] || ""}</td>
+                  <td>${row["Agst"] || ""}</td>
+                  <td>${row["Sept"] || ""}</td>
+                  <td>${row["Okt"] || ""}</td>
+                  <td>${row["Nov"] || ""}</td>
+                  <td>${row["Des"] || ""}</td>
+                `;
+              tbody.appendChild(tr);
+            });
+          });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", initTable);
+    </script>
+  </body>
+</html>
