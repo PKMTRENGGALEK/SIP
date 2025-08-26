@@ -1,137 +1,167 @@
-<div class="container py-4">
-  <div class="card p-3 shadow">
-    <h3 class="text-warning"><u>SOP</u></h3>
-    <p>
-      <strong>SOP Puskesmas</strong> adalah Standar Operasional Prosedur (SOP)
-      yang diterapkan di Puskesmas. SOP adalah serangkaian instruksi tertulis
-      yang dibakukan mengenai berbagai proses penyelenggaraan kegiatan di
-      Puskesmas, termasuk pelayanan kesehatan, administrasi, dan lain-lain.
-      Tujuannya adalah untuk memastikan bahwa semua kegiatan di Puskesmas
-      dilakukan secara efektif, efisien, konsisten, dan sesuai standar.
-    </p>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOP - Puskesmas Trenggalek</title>
 
-    <p>SOP di Puskesmas mencakup berbagai aspek, antara lain:</p>
-    <ul>
-      <li>
-        <strong>Pendaftaran pasien:</strong> Mulai dari penerimaan pasien,
-        pencatatan data, hingga penanganan keluhan.
-      </li>
-      <li>
-        <strong>Pelayanan medis:</strong> Prosedur pemeriksaan, diagnosis,
-        pengobatan, dan rujukan pasien.
-      </li>
-      <li>
-        <strong>Pelayanan laboratorium:</strong> Prosedur pengambilan sampel,
-        pengujian, dan pelaporan hasil.
-      </li>
-      <li>
-        <strong>Pelayanan farmasi:</strong> Prosedur pengadaan, penyimpanan, dan
-        penyerahan obat-obatan.
-      </li>
-      <li>
-        <strong>Pelayanan kebidanan dan anak:</strong> Prosedur pemeriksaan ibu
-        hamil, persalinan, dan perawatan bayi.
-      </li>
-      <li>
-        <strong>Pelayanan gawat darurat:</strong> Prosedur penanganan pasien
-        gawat darurat di IGD.
-      </li>
-      <li>
-        <strong>Rekam medis:</strong> Prosedur pencatatan, penyimpanan, dan
-        pengelolaan data pasien.
-      </li>
-      <li>
-        <strong>Administrasi:</strong> Prosedur pengelolaan keuangan,
-        kepegawaian, dan surat menyurat.
-      </li>
-    </ul>
-  </div>
-  <br />
-  <button
-    class="btn btn-outline-warning mb-3 shadow"
-    data-bs-toggle="modal"
-    data-bs-target="#uploadModal"
-  >
-    <i class="bi bi-plus-circle"></i> Tambah Data
-  </button>
-  <div class="card p-3 shadow-sm">
-    <h5 class="mb-3 fw-bold">📋 Data SOP</h5>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <div class="table-responsive">
-      <table id="sop" class="table table-bordered table-striped">
-        <thead style="font-size: 13px; text-align: center">
-          <tr>
-            <th class="bg-warning bg-gradient text-white">No</th>
-            <th class="bg-warning bg-gradient text-white">Nama Dokumen</th>
-            <th class="bg-warning bg-gradient text-white">Ukuran</th>
-            <th class="bg-warning bg-gradient text-white">File</th>
-          </tr>
-        </thead>
-        <tbody id="datasop" style="font-size: 13px">
-          <tr>
-            <td colspan="3" class="text-center">Memuat data...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<!-- Modal Upload -->
-<div
-  class="modal fade"
-  id="uploadModal"
-  tabindex="-1"
-  aria-labelledby="uploadModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <form id="uploadForm" class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="uploadModalLabel">Tambah Dokumen</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Tutup"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="tanggalSurat" class="form-label">Nama Dokumen</label>
-          <input type="text" class="form-control" id="nama" required />
-        </div>
-        <div class="mb-3">
-          <label for="fileInput" class="form-label">Pilih File</label>
-          <input
-            type="file"
-            class="form-control"
-            id="fileInput"
-            accept=".pdf,.doc,.docx,.jpg,.png"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <div class="progress d-none" id="uploadProgress">
-            <div
-              class="progress-bar progress-bar-striped progress-bar-animated"
-              role="progressbar"
-              style="width: 0%"
-              id="progressBar"
-            >
-              0%
+  <style>
+    body {
+      background: #f8fafc;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h2 {
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    /* Card Style mirip mutu */
+    .card-menu {
+      border: none;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      height: 100%;
+      position: relative;
+    }
+    .card-menu:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+    }
+    .card-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #36d1dc, #5b86e5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      color: #fff;
+      font-size: 28px;
+    }
+    .card-title {
+      font-weight: 600;
+      color: #222;
+    }
+
+    /* Accordion */
+    .accordion-button {
+      font-weight: 500;
+    }
+    .accordion-button:not(.collapsed) {
+      color: #36d1dc;
+      background-color: #f0f9ff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5" style="margin-top: 30px">
+  <h2><i class="fa-solid fa-book me-2"></i> SOP</h2>
+
+  <div class="row g-4 justify-content-center">
+    <!-- Tahun 2023 -->
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card card-menu text-center p-4">
+        <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <h5 class="card-title">Tahun 2023</h5>
+        <div class="accordion mt-3" id="accordion2023">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading2023">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2023" aria-expanded="false" aria-controls="collapse2023">
+                Daftar SOP 2023
+              </button>
+            </h2>
+            <div id="collapse2023" class="accordion-collapse collapse" aria-labelledby="heading2023" data-bs-parent="#accordion2023">
+              <div class="accordion-body text-start">
+                <ul>
+                  <li>Admen</li>
+                  <li>Mutu</li>
+                  <li>Jaringan dan Jejaring</li>
+                  <li>UKM Esensial</li>
+                  <li>UKM Pengembangan</li>
+                  <li>UKP</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Upload</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Batal
-        </button>
+    </div>
+
+    <!-- Tahun 2024 -->
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card card-menu text-center p-4">
+        <div class="card-icon"><i class="fa-solid fa-calendar-days"></i></div>
+        <h5 class="card-title">Tahun 2024</h5>
+        <div class="accordion mt-3" id="accordion2024">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading2024">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2024" aria-expanded="false" aria-controls="collapse2024">
+                Daftar SOP 2024
+              </button>
+            </h2>
+            <div id="collapse2024" class="accordion-collapse collapse" aria-labelledby="heading2024" data-bs-parent="#accordion2024">
+              <div class="accordion-body text-start">
+                <ul>
+                  <li>Admen</li>
+                  <li>Mutu</li>
+                  <li>Jaringan dan Jejaring</li>
+                  <li>UKM Esensial</li>
+                  <li>UKM Pengembangan</li>
+                  <li>UKP</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </form>
+    </div>
+
+    <!-- Tahun 2025 -->
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card card-menu text-center p-4">
+        <div class="card-icon"><i class="fa-solid fa-calendar"></i></div>
+        <h5 class="card-title">Tahun 2025</h5>
+        <div class="accordion mt-3" id="accordion2025">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading2025">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2025" aria-expanded="false" aria-controls="collapse2025">
+                Daftar SOP 2025
+              </button>
+            </h2>
+            <div id="collapse2025" class="accordion-collapse collapse" aria-labelledby="heading2025" data-bs-parent="#accordion2025">
+              <div class="accordion-body text-start">
+                <ul>
+                  <li>Klaster 1 : Manajemen</li>
+                  <li>Klaster 2 : Ibu Anak</li>
+                  <li>Klaster 3 : Dewasa & Lansia</li>
+                  <li>Klaster 4 : P2 Kesling</li>
+                  <li>Lintas Klaster</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- Toast Container -->
-<div class="toast-container" id="toastContainer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
