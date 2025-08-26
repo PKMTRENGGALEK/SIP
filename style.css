@@ -19,8 +19,8 @@ body.overflow-hidden-x {
   background-color: #fff;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
   z-index: 1040;
-  overflow-y: auto;         /* Aktifkan scroll vertikal */
-  overflow-x: hidden;       /* Cegah scroll horizontal */
+  overflow-y: auto; /* Aktifkan scroll vertikal */
+  overflow-x: hidden; /* Cegah scroll horizontal */
 }
 
 .sidebar .nav-link {
