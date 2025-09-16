@@ -127,6 +127,9 @@ function loadPage(page) {
         case "rtm.html":
           initrtm?.();
           break;
+        case "monitoring_inventaris.html":
+          initinventaris?.();
+          break;
         case "ruk.html":
           initruk?.();
           break;
@@ -3698,4 +3701,68 @@ async function initrtm() {
   uploadForm.addEventListener("submit", handleUpload);
 
   loadData();
+}
+//monitoring inventaris
+async function initinventaris() {
+  const months = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+
+  const links = {
+    Januari:
+      "https://docs.google.com/spreadsheets/d/16OUhWRhDmvMzStZ6T-1VtcnYUXvsXAfh/edit?usp=drive_link&ouid=117758472409363132136&rtpof=true&sd=true",
+    Februari:
+      "https://docs.google.com/spreadsheets/d/1WumJ4otrnyFrbEegDUS7GZqv4vzmchqIqFghJz-x86w/edit?usp=drive_link",
+    Maret:
+      "https://docs.google.com/spreadsheets/d/1oXONifhXXwZkCNo173eQzDLYWZ5YXMh8EklCkGB12BM/edit?usp=drive_link",
+    April:
+      "https://docs.google.com/spreadsheets/d/1jPlO_ufuH6qHv_4waI9ywoqy6j3TNORi31MbL0bYz0o/edit?usp=drive_link",
+    Mei: "https://docs.google.com/spreadsheets/d/1gzai14BSgPqzKSyW7gToZU8-q2P0EFOyDG9j85OJeX4/edit?usp=drive_link",
+    Juni: "https://docs.google.com/spreadsheets/d/1WrQF3oTDixl-BmArTxKuQ7s4wAk5BIP_/edit?usp=drive_link&ouid=117758472409363132136&rtpof=true&sd=true",
+    Juli: "https://docs.google.com/spreadsheets/d/19X3033VpKKXCn_uB4WbZirmhjq-42h1l/edit?usp=drive_link&ouid=117758472409363132136&rtpof=true&sd=true",
+    Agustus:
+      "https://docs.google.com/spreadsheets/d/1zDzsyxcjWNvLEfpFNqeqL977gSUHW-tLHNT1vKUPFgU/edit?usp=drive_link",
+    September:
+      "https://docs.google.com/spreadsheets/d/1rramhT0cTHF8z3T7laOmuXXxyCRKME_I28P_bxv2IZI/edit?usp=drive_link",
+    Oktober:
+      "https://docs.google.com/spreadsheets/d/1EJH9r6ycEYJ-r5r8clloKqVRrd_ewjnilTQcGPJGNx0/edit?usp=drive_link",
+    November:
+      "https://docs.google.com/spreadsheets/d/1xHuABMFJK-VgzMaWru-_WOR6t7saLgX6yumGPErDWXY/edit?usp=drive_link",
+    Desember:
+      "https://docs.google.com/spreadsheets/d/1YA1b4rAeCo3w7aZnwJs45H8Tdug3ACQcbbPgKJ6dgDw/edit?usp=drive_link",
+  };
+
+  const container = document.getElementById("cardContainer");
+
+  months.forEach((month) => {
+    const link = links[month];
+
+    const col = document.createElement("div");
+    col.className = "col-lg-3 col-md-4 col-sm-6";
+
+    col.innerHTML = `
+      <a href="${link}" target="_blank">
+        <div class="card inventory-card h-100 text-center">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <div class="icon-box"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="month-title">Monitoring Inventaris</div>
+            <div class="year-title">Bulan ${month} 2025</div>
+          </div>
+        </div>
+      </a>
+    `;
+
+    container.appendChild(col);
+  });
 }
