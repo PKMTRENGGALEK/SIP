@@ -121,6 +121,9 @@ function loadPage(page) {
         case "pkpkm.html":
           initpkpkm?.();
           break;
+        case "SPP.html":
+          // initpkpkm?.();
+          break;
         case "rtm.html":
           initrtm?.();
           break;
