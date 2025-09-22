@@ -1,15 +1,16 @@
 <div class="container py-4">
-  <button
+  <!-- <button
     class="btn btn-warning mb-3 text-white shadow"
     data-bs-toggle="modal"
     data-bs-target="#addModal"
     style="font-size: 13px"
   >
-    ➕ Tambah Aplikasi
-  </button>
-  <div class="card p-3 shadow">
+    ➕ Tambah Data Tim Mutu
+  </button> -->
+  <div class="card p-3 shadow-sm">
+    <h4 class="text-danger text-center">Dokumen Tim Mutu</h4>
     <div class="table-responsive">
-      <table id="karyawanTable" class="table table-bordered">
+      <table id="mututable" class="table table-bordered">
         <thead>
           <tr>
             <th
@@ -23,14 +24,21 @@
               class="bg-success bg-gradient text-center text-white"
               style="font-size: 13px"
             >
-              Nama
+              Nama Dokumen
             </th>
             <th
               class="bg-success bg-gradient text-center text-white"
               style="font-size: 13px"
               width="100px"
             >
-              Link Aplikasi
+              Link Data
+            </th>
+            <th
+              class="bg-success bg-gradient text-center text-white"
+              style="font-size: 13px"
+              width="120px"
+            >
+              Aksi
             </th>
           </tr>
         </thead>
@@ -44,7 +52,7 @@
   <div class="modal-dialog">
     <form id="addForm" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Tambah Aplikasi</h5>
+        <h5 class="modal-title">Tambah Data</h5>
         <button
           type="button"
           class="btn-close"
