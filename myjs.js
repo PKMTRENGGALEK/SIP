@@ -2649,25 +2649,35 @@ async function initruk() {
       const res = await fetch(API_URL);
       const data = await res.json();
 
-      if (table) table.destroy();
+      // Hancurkan DataTable lama kalau ada
+      if (table) {
+        table.destroy();
+      }
       tbody.innerHTML = "";
 
       [...data].reverse().forEach((item, i) => {
         const row = `
-    <tr style="font-size:12px;">
-      <td class="text-center">${i + 1}</td>
-      <td>${item.nama}</td>
-          <td>${item.ukuran}</td>
-      <td class="text-center">
-        <a href="${item.file}" target="_blank">
-          <i class="bi bi-file-earmark-richtext fs-4 text-danger shadow"></i>
-        </a>
-      </td>
-    </tr>`;
+          <tr style="font-size:12px;">
+            <td class="text-center">${i + 1}</td>
+            <td>${item.nama}</td>
+            <td>${item.ukuran}</td>
+            <td class="text-center">
+              <a href="${item.file}" target="_blank">
+                <i class="bi bi-file-earmark-richtext fs-4 text-danger shadow"></i>
+              </a>
+            </td>
+          </tr>`;
         tbody.insertAdjacentHTML("beforeend", row);
       });
 
-      table = new DataTable("#sasaran", { responsive: true });
+      // Inisialisasi ulang DataTable
+      table = new DataTable("#renstra", {
+        responsive: true,
+        pageLength: 5,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/id.json",
+        },
+      });
     } catch (err) {
       tbody.innerHTML = `
         <tr>
@@ -2800,25 +2810,35 @@ async function initrpk() {
       const res = await fetch(API_URL);
       const data = await res.json();
 
-      if (table) table.destroy();
+      // Hancurkan DataTable lama
+      if (table) {
+        table.destroy();
+      }
       tbody.innerHTML = "";
 
       [...data].reverse().forEach((item, i) => {
         const row = `
-    <tr style="font-size:12px;">
-      <td class="text-center">${i + 1}</td>
-      <td>${item.nama}</td>
-          <td>${item.ukuran}</td>
-      <td class="text-center">
-        <a href="${item.file}" target="_blank">
-          <i class="bi bi-file-earmark-richtext fs-4 text-danger shadow"></i>
-        </a>
-      </td>
-    </tr>`;
+          <tr style="font-size:12px;">
+            <td class="text-center">${i + 1}</td>
+            <td>${item.nama}</td>
+            <td>${item.ukuran}</td>
+            <td class="text-center">
+              <a href="${item.file}" target="_blank">
+                <i class="bi bi-file-earmark-richtext fs-4 text-danger shadow"></i>
+              </a>
+            </td>
+          </tr>`;
         tbody.insertAdjacentHTML("beforeend", row);
       });
 
-      table = new DataTable("#sasaran", { responsive: true });
+      // Init DataTable (pastikan ID tabel sesuai HTML)
+      table = new DataTable("#renstra", {
+        responsive: true,
+        pageLength: 5,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/id.json",
+        },
+      });
     } catch (err) {
       tbody.innerHTML = `
         <tr>
