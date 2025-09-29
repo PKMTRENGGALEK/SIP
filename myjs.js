@@ -133,6 +133,9 @@ function loadPage(page) {
         case "monitoring_inventaris.html":
           initinventaris?.();
           break;
+        case "pekppp.html":
+          // initinventaris?.();
+          break;
         case "ruk.html":
           initruk?.();
           break;
