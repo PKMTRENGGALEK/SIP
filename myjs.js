@@ -139,6 +139,9 @@ function loadPage(page) {
         case "ruk.html":
           initruk?.();
           break;
+        case "ekin.html":
+          // initruk?.();
+          break;
         // Tambahan halaman lain jika perlu
         default:
           // Tidak ada fungsi khusus
