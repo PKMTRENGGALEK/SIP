@@ -15,39 +15,55 @@
       href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
       rel="stylesheet"
     />
-    <link
-      href="https://cdn.datatables.net/rowgroup/1.4.1/css/rowGroup.bootstrap5.min.css"
-      rel="stylesheet"
-    />
 
     <style>
       body {
         background: #f9fafb;
       }
+
       .navbar-brand {
         font-weight: bold;
       }
+
+      td[contenteditable="true"] {
+        background-color: #fff8e1;
+        cursor: text;
+      }
+
+      td[contenteditable="true"]:focus {
+        outline: 2px solid #0d6efd;
+        background-color: #fff;
+      }
+
+      td.saving {
+        background-color: #fff3cd !important;
+      }
+
+      td.saved {
+        background-color: #d1e7dd !important;
+        transition: background-color 1s;
+      }
+
+      .toast-container {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1055;
+      }
+
       .table thead th {
         text-align: center;
         vertical-align: middle;
       }
-      footer {
-        background: #f1f1f1;
-        padding: 20px;
-        text-align: center;
-        margin-top: 40px;
-      }
 
-      /* Warna untuk grouping */
-      .group-induk td {
-        background-color: #0d6efd !important; /* biru */
-        color: white !important;
-        font-weight: bold;
-      }
-      .group-sub td {
-        background-color: #f8f9fa !important; /* abu */
-        font-weight: 600;
-        padding-left: 20px;
+      .note {
+        font-size: 12px;
+        color: #555;
+        background: #f8f9fa;
+        border-left: 4px solid #0d6efd;
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 6px;
       }
     </style>
   </head>
@@ -62,26 +78,31 @@
       </div>
     </nav>
 
-    <!-- Content -->
+    <!-- Konten utama -->
     <div class="container my-5">
       <h3 class="text-center mb-4">📊 Monitoring & Evaluasi Mutu</h3>
-
-      <div class="table-responsive" style="font-size: 11px">
+      <div class="mb-4 mb-md-0 ">
+        <a href="analisamutu.html" class="btn btn-outline-danger btn-sm no-print shadow">
+          ← Analisa
+        </a>
+      </div>
+      <div class="table-responsive mt-2" style="font-size: 11px">
         <table
           class="table table-bordered table-striped align-middle"
           id="monevTable"
         >
           <thead class="table-success text-center align-middle">
             <tr>
+              <th>No</th>
               <th>Jenis Variabel</th>
-              <th>Target 2025</th>
-              <th>Satuan Sasaran</th>
+              <th>Target Tahun 2025 (dalam %)</th>
+              <th>Satuan sasaran</th>
               <th>Total Sasaran</th>
-              <th>Target Sasaran/Tahun</th>
-              <th>Target/Bulan</th>
-              <th>Pencapaian</th>
-              <th>% Cakupan Riil</th>
-              <th>Ketercapaian Target</th>
+              <th>Target Sasaran/tahun</th>
+              <th>Target/bulan</th>
+              <th>Pencapaian (dalam satuan sasaran)</th>
+              <th>%Cakupan Riil</th>
+              <th>Ketercapaian Target Tahun n</th>
               <th>Jan</th>
               <th>Feb</th>
               <th>Mar</th>
@@ -98,98 +119,158 @@
           </thead>
           <tbody>
             <tr>
-              <td colspan="21" class="text-center">Memuat data...</td>
+              <td colspan="22" class="text-center">Memuat data...</td>
             </tr>
           </tbody>
         </table>
+
+        <div class="note">
+          💡 <b>Petunjuk Pengisian:</b><br />
+          - Klik pada kolom bulan (Jan–Des) untuk mengisi atau memperbarui data
+          pencapaian.<br />
+          - Tekan <b>Enter</b> atau klik di luar sel untuk menyimpan otomatis ke
+          Google Sheet.<br />
+          - Nilai akan disimpan dengan dua angka di belakang koma.<br />
+          - Warna <span style="background:#fff3cd;padding:2px 6px;">kuning</span>
+          menandakan proses penyimpanan, dan
+          <span style="background:#d1e7dd;padding:2px 6px;">hijau</span> berarti
+          data berhasil disimpan.
+        </div>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
+    <footer class="bg-light py-3 text-center">
       <p class="mb-0">
         &copy; 2025 Puskesmas Trenggalek - Monitoring & Evaluasi Mutu
       </p>
     </footer>
 
-    <!-- JS -->
+    <div class="toast-container"></div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/rowgroup/1.4.1/js/dataTables.rowGroup.min.js"></script>
 
     <script>
-      async function initTable() {
-        const res = await fetch(
-          "https://script.google.com/macros/s/AKfycbzNHX9I5PvB9ncPudkn19jNwxwTxyzRwpU7VKbU2AokyQZ8GGrvxtfr77YsnMQo_bo4/exec"
-        );
-        const data = await res.json();
+      const endpoint =
+        "https://script.google.com/macros/s/AKfycbzNHX9I5PvB9ncPudkn19jNwxwTxyzRwpU7VKbU2AokyQZ8GGrvxtfr77YsnMQo_bo4/exec";
 
-        renderTable(data);
+      async function initTable() {
+        try {
+          const res = await fetch(endpoint);
+          const data = await res.json();
+          renderTable(data);
+        } catch (err) {
+          console.error("Gagal memuat data:", err);
+        }
+      }
+
+      function formatNum(value) {
+        if (value === undefined || value === null || value === "") return "";
+        const num = parseFloat(value);
+        if (isNaN(num)) return value;
+        return num % 1 === 0 ? num.toString() : num.toFixed(2);
       }
 
       function renderTable(rows) {
-        const table = document.getElementById("monevTable");
-        const tbody = table.querySelector("tbody");
+        const tbody = document.querySelector("#monevTable tbody");
         tbody.innerHTML = "";
 
-        // 🔹 Kelompokkan data berdasarkan Induk & Sub
-        const grouped = {};
         rows.forEach((row) => {
-          const induk = row["Induk"] || "Lainnya";
-          const sub = row["Sub"] || "Lainnya";
-          if (!grouped[induk]) grouped[induk] = {};
-          if (!grouped[induk][sub]) grouped[induk][sub] = [];
-          grouped[induk][sub].push(row);
+          const tr = document.createElement("tr");
+          tr.dataset.id = row["No"] || "";
+
+          tr.innerHTML = `
+            <td>${row["No"] || ""}</td>
+            <td>${row["Jenis Variabel"] || ""}</td>
+            <td>${formatNum(row["Target Tahun 2025 (dalam %)"])}</td>
+            <td>${row["Satuan sasaran"] || ""}</td>
+            <td>${formatNum(row["Total Sasaran"])}</td>
+            <td>${formatNum(row["Target Sasaran/tahun"])}</td>
+            <td>${formatNum(row["Target/bulan"])}</td>
+            <td>${formatNum(row["Pencapaian (dalam satuan sasaran)"])}</td>
+            <td>${formatNum(row["%Cakupan Riil"])}</td>
+            <td>${formatNum(row["Ketercapaian Target Tahun n"])}</td>
+            ${["Jan","Feb","Mar","Apr","Mei","Juni","Juli","Agst","Sept","Okt","Nov","Des"]
+              .map(
+                (bulan) => `
+                  <td contenteditable="true" data-bulan="${bulan}">
+                    ${formatNum(row[bulan])}
+                  </td>`
+              )
+              .join("")}
+          `;
+
+          tbody.appendChild(tr);
         });
 
-        // 🔹 Loop hasil grouping
-        Object.keys(grouped).forEach((induk) => {
-          // Tambah header Induk
-          const trInduk = document.createElement("tr");
-          trInduk.innerHTML = `<td colspan="21" class="group-induk">${induk}</td>`;
-          tbody.appendChild(trInduk);
+        enableEditing();
+      }
 
-          Object.keys(grouped[induk]).forEach((sub) => {
-            // Kalau Sub kosong / "Lainnya" → skip
-            if (
-              sub &&
-              sub !== "Lainnya" &&
-              induk !== "INDIKATOR MUTU PELAYANAN (IMPEL)"
-            ) {
-              const trSub = document.createElement("tr");
-              trSub.innerHTML = `<td colspan="21" class="group-sub">${sub}</td>`;
-              tbody.appendChild(trSub);
+      function showToast(message, type = "success") {
+        const toastContainer = document.querySelector(".toast-container");
+        const toastEl = document.createElement("div");
+
+        const bgClass =
+          type === "success"
+            ? "bg-success text-white"
+            : type === "error"
+            ? "bg-danger text-white"
+            : "bg-secondary text-white";
+
+        toastEl.className = `toast align-items-center ${bgClass} border-0 mb-2`;
+        toastEl.role = "alert";
+        toastEl.innerHTML = `
+          <div class="d-flex">
+            <div class="toast-body">${message}</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+          </div>
+        `;
+
+        toastContainer.appendChild(toastEl);
+        const toast = new bootstrap.Toast(toastEl, { delay: 2000 });
+        toast.show();
+        toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
+      }
+
+      function enableEditing() {
+        document.querySelectorAll('td[contenteditable="true"]').forEach((td) => {
+          td.addEventListener("blur", async (e) => {
+            const cell = e.target;
+            const tr = cell.closest("tr");
+            const id = tr.dataset.id;
+            const bulan = cell.dataset.bulan;
+            let nilai = cell.innerText.trim();
+
+            if (!id || !bulan) return;
+
+            const num = parseFloat(nilai);
+            if (!isNaN(num)) nilai = num.toFixed(2);
+
+            cell.classList.add("saving");
+
+            try {
+              const url = `${endpoint}?action=update&id=${encodeURIComponent(
+                id
+              )}&bulan=${encodeURIComponent(bulan)}&nilai=${encodeURIComponent(nilai)}`;
+
+              const res = await fetch(url);
+              const result = await res.json();
+
+              if (result.success) {
+                cell.classList.remove("saving");
+                cell.classList.add("saved");
+                showToast("✅ Data tersimpan berhasil", "success");
+                setTimeout(() => cell.classList.remove("saved"), 1200);
+              } else {
+                showToast("❌ Gagal menyimpan: " + result.message, "error");
+                cell.classList.remove("saving");
+              }
+            } catch (err) {
+              showToast("⚠️ Terjadi kesalahan koneksi!", "error");
+              cell.classList.remove("saving");
             }
-
-            grouped[induk][sub].forEach((row) => {
-              const tr = document.createElement("tr");
-              tr.innerHTML = `
-                  <td>${row["Jenis Variabel"] || ""}</td>
-                  <td>${row["Target Tahun 2025 (dalam %)"] || ""}</td>
-                  <td>${row["Satuan sasaran"] || ""}</td>
-                  <td>${row["Total Sasaran"] || ""}</td>
-                  <td>${row["Target Sasaran/tahun"] || ""}</td>
-                  <td>${row["Target/bulan"] || ""}</td>
-                  <td>${row["Pencapaian (dalam satuan sasaran)"] || ""}</td>
-                  <td>${row["%Cakupan Riil"] || ""}</td>
-                  <td>${row["Ketercapaian Target Tahun n"] || ""}</td>
-                  <td>${row["Jan"] || ""}</td>
-                  <td>${row["Feb"] || ""}</td>
-                  <td>${row["Mar"] || ""}</td>
-                  <td>${row["Apr"] || ""}</td>
-                  <td>${row["Mei"] || ""}</td>
-                  <td>${row["Juni"] || ""}</td>
-                  <td>${row["Juli"] || ""}</td>
-                  <td>${row["Agst"] || ""}</td>
-                  <td>${row["Sept"] || ""}</td>
-                  <td>${row["Okt"] || ""}</td>
-                  <td>${row["Nov"] || ""}</td>
-                  <td>${row["Des"] || ""}</td>
-                `;
-              tbody.appendChild(tr);
-            });
           });
         });
       }
