@@ -44,6 +44,17 @@
         transition: background-color 1s;
       }
 
+      .sub-header {
+        background: linear-gradient(90deg, #d1e7dd, #e8f5e9);
+        font-weight: 600;
+        color: #0d6efd;
+        text-transform: uppercase;
+      }
+
+      .sub-header td {
+        padding: 6px 12px !important;
+      }
+
       .toast-container {
         position: fixed;
         bottom: 1rem;
@@ -81,11 +92,29 @@
     <!-- Konten utama -->
     <div class="container my-5">
       <h3 class="text-center mb-4">📊 Monitoring & Evaluasi Mutu</h3>
-      <div class="mb-4 mb-md-0 ">
-        <a href="analisamutu.html" class="btn btn-outline-danger btn-sm no-print shadow">
+      <div class="note mt-2 mb-2">
+        💡 <b>Petunjuk Pengisian:</b><br />
+        - Klik pada kolom bulan (Jan–Des) untuk mengisi atau memperbarui data
+        pencapaian.<br />
+        - Tekan <b>Enter</b> atau klik di luar sel untuk menyimpan otomatis ke
+        Google Sheet.<br />
+        - Nilai akan disimpan dengan dua angka di belakang koma.<br />
+        - Warna
+        <span style="background: #fff3cd; padding: 2px 6px">kuning</span>
+        menandakan proses penyimpanan, dan
+        <span style="background: #d1e7dd; padding: 2px 6px">hijau</span> berarti
+        data berhasil disimpan.
+      </div>
+
+      <div class="mb-4 mb-md-0">
+        <a
+          href="analisamutu.html"
+          class="btn btn-outline-danger btn-sm no-print shadow"
+        >
           ← Analisa
         </a>
       </div>
+
       <div class="table-responsive mt-2" style="font-size: 11px">
         <table
           class="table table-bordered table-striped align-middle"
@@ -123,19 +152,6 @@
             </tr>
           </tbody>
         </table>
-
-        <div class="note">
-          💡 <b>Petunjuk Pengisian:</b><br />
-          - Klik pada kolom bulan (Jan–Des) untuk mengisi atau memperbarui data
-          pencapaian.<br />
-          - Tekan <b>Enter</b> atau klik di luar sel untuk menyimpan otomatis ke
-          Google Sheet.<br />
-          - Nilai akan disimpan dengan dua angka di belakang koma.<br />
-          - Warna <span style="background:#fff3cd;padding:2px 6px;">kuning</span>
-          menandakan proses penyimpanan, dan
-          <span style="background:#d1e7dd;padding:2px 6px;">hijau</span> berarti
-          data berhasil disimpan.
-        </div>
       </div>
     </div>
 
@@ -177,31 +193,55 @@
         const tbody = document.querySelector("#monevTable tbody");
         tbody.innerHTML = "";
 
+        let currentSub = "";
+
         rows.forEach((row) => {
+          // Jika sub berubah, tambahkan baris header grup
+          if (row["Sub"] && row["Sub"] !== currentSub) {
+            currentSub = row["Sub"];
+            const subTr = document.createElement("tr");
+            subTr.classList.add("sub-header");
+            subTr.innerHTML = `<td colspan="22">${currentSub}</td>`;
+            tbody.appendChild(subTr);
+          }
+
+          // Buat baris data
           const tr = document.createElement("tr");
           tr.dataset.id = row["No"] || "";
 
           tr.innerHTML = `
-            <td>${row["No"] || ""}</td>
-            <td>${row["Jenis Variabel"] || ""}</td>
-            <td>${formatNum(row["Target Tahun 2025 (dalam %)"])}</td>
-            <td>${row["Satuan sasaran"] || ""}</td>
-            <td>${formatNum(row["Total Sasaran"])}</td>
-            <td>${formatNum(row["Target Sasaran/tahun"])}</td>
-            <td>${formatNum(row["Target/bulan"])}</td>
-            <td>${formatNum(row["Pencapaian (dalam satuan sasaran)"])}</td>
-            <td>${formatNum(row["%Cakupan Riil"])}</td>
-            <td>${formatNum(row["Ketercapaian Target Tahun n"])}</td>
-            ${["Jan","Feb","Mar","Apr","Mei","Juni","Juli","Agst","Sept","Okt","Nov","Des"]
-              .map(
-                (bulan) => `
-                  <td contenteditable="true" data-bulan="${bulan}">
-                    ${formatNum(row[bulan])}
-                  </td>`
-              )
-              .join("")}
-          `;
-
+      <td>${row["No"] || ""}</td>
+      <td>${row["Jenis Variabel"] || ""}</td>
+      <td>${formatNum(row["Target Tahun 2025 (dalam %)"])}</td>
+      <td>${row["Satuan sasaran"] || ""}</td>
+      <td>${formatNum(row["Total Sasaran"])}</td>
+      <td>${formatNum(row["Target Sasaran/tahun"])}</td>
+      <td>${formatNum(row["Target/bulan"])}</td>
+      <td>${formatNum(row["Pencapaian (dalam satuan sasaran)"])}</td>
+      <td>${formatNum(row["%Cakupan Riil"])}</td>
+      <td>${formatNum(row["Ketercapaian Target Tahun n"])}</td>
+      ${[
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agst",
+        "Sept",
+        "Okt",
+        "Nov",
+        "Des",
+      ]
+        .map(
+          (bulan) => `
+            <td contenteditable="true" data-bulan="${bulan}">
+              ${formatNum(row[bulan])}
+            </td>`
+        )
+        .join("")}
+    `;
           tbody.appendChild(tr);
         });
 
@@ -235,44 +275,48 @@
       }
 
       function enableEditing() {
-        document.querySelectorAll('td[contenteditable="true"]').forEach((td) => {
-          td.addEventListener("blur", async (e) => {
-            const cell = e.target;
-            const tr = cell.closest("tr");
-            const id = tr.dataset.id;
-            const bulan = cell.dataset.bulan;
-            let nilai = cell.innerText.trim();
+        document
+          .querySelectorAll('td[contenteditable="true"]')
+          .forEach((td) => {
+            td.addEventListener("blur", async (e) => {
+              const cell = e.target;
+              const tr = cell.closest("tr");
+              const id = tr.dataset.id;
+              const bulan = cell.dataset.bulan;
+              let nilai = cell.innerText.trim();
 
-            if (!id || !bulan) return;
+              if (!id || !bulan) return;
 
-            const num = parseFloat(nilai);
-            if (!isNaN(num)) nilai = num.toFixed(2);
+              const num = parseFloat(nilai);
+              if (!isNaN(num)) nilai = num.toFixed(2);
 
-            cell.classList.add("saving");
+              cell.classList.add("saving");
 
-            try {
-              const url = `${endpoint}?action=update&id=${encodeURIComponent(
-                id
-              )}&bulan=${encodeURIComponent(bulan)}&nilai=${encodeURIComponent(nilai)}`;
+              try {
+                const url = `${endpoint}?action=update&id=${encodeURIComponent(
+                  id
+                )}&bulan=${encodeURIComponent(
+                  bulan
+                )}&nilai=${encodeURIComponent(nilai)}`;
 
-              const res = await fetch(url);
-              const result = await res.json();
+                const res = await fetch(url);
+                const result = await res.json();
 
-              if (result.success) {
-                cell.classList.remove("saving");
-                cell.classList.add("saved");
-                showToast("✅ Data tersimpan berhasil", "success");
-                setTimeout(() => cell.classList.remove("saved"), 1200);
-              } else {
-                showToast("❌ Gagal menyimpan: " + result.message, "error");
+                if (result.success) {
+                  cell.classList.remove("saving");
+                  cell.classList.add("saved");
+                  showToast("✅ Data tersimpan berhasil", "success");
+                  setTimeout(() => cell.classList.remove("saved"), 1200);
+                } else {
+                  showToast("❌ Gagal menyimpan: " + result.message, "error");
+                  cell.classList.remove("saving");
+                }
+              } catch (err) {
+                showToast("⚠️ Terjadi kesalahan koneksi!", "error");
                 cell.classList.remove("saving");
               }
-            } catch (err) {
-              showToast("⚠️ Terjadi kesalahan koneksi!", "error");
-              cell.classList.remove("saving");
-            }
+            });
           });
-        });
       }
 
       document.addEventListener("DOMContentLoaded", initTable);
