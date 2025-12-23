@@ -139,9 +139,6 @@ function loadPage(page) {
         case "ruk.html":
           initruk?.();
           break;
-        case "kematian.html":
-          initkemtian?.();
-          break;
         case "ekin.html":
           // initruk?.();
           break;
@@ -224,47 +221,18 @@ function setActiveMenu(activeLink) {
   });
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   loadPage("dashboard.html");
-
-//   document.querySelectorAll(".nav-link").forEach((link) => {
-//     link.addEventListener("click", function (e) {
-//       const href = this.getAttribute("href");
-//       if (href.endsWith(".html")) {
-//         e.preventDefault();
-//         loadPage(href);
-//         setActiveMenu(this);
-
-//         // Tutup offcanvas jika di mode mobile
-//         const offcanvas = bootstrap.Offcanvas.getInstance(
-//           document.getElementById("sidebarOffcanvas")
-//         );
-//         if (offcanvas) offcanvas.hide();
-//       }
-//     });
-//   });
-// });
 document.addEventListener("DOMContentLoaded", function () {
-  const params = new URLSearchParams(window.location.search);
-  const pageFromUrl = params.get("page");
-
-  if (pageFromUrl) {
-    loadPage(pageFromUrl);
-  } else {
-    loadPage("dashboard.html");
-  }
+  loadPage("dashboard.html");
 
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
-
-      // 🔥 HANDLE INTERNAL PAGE
-      if (href && href.includes("?page=")) {
+      if (href.endsWith(".html")) {
         e.preventDefault();
-        const page = new URLSearchParams(href.split("?")[1]).get("page");
-        loadPage(page);
+        loadPage(href);
         setActiveMenu(this);
 
+        // Tutup offcanvas jika di mode mobile
         const offcanvas = bootstrap.Offcanvas.getInstance(
           document.getElementById("sidebarOffcanvas")
         );
@@ -274,37 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// kematian.js
-async function initkemtian(params) {
-  const copyButton = document.getElementById("copyButton");
-  const externalLink = document.getElementById("externalLink");
-  if (!copyButton || !externalLink) return;
-
-  copyButton.addEventListener("click", function () {
-    const text = externalLink.value;
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text).then(showSuccess).catch(fallbackCopy);
-    } else {
-      fallbackCopy();
-    }
-  });
-
-  function fallbackCopy() {
-    externalLink.select();
-    externalLink.setSelectionRange(0, 99999);
-    document.execCommand("copy");
-    showSuccess();
-  }
-
-  function showSuccess() {
-    copyButton.innerHTML = '<i class="fa-solid fa-check me-1"></i>Copied!';
-    copyButton.classList.add("btn-outline-success");
-    setTimeout(() => {
-      copyButton.innerHTML = '<i class="fa-regular fa-copy me-1"></i>Copy';
-      copyButton.classList.remove("btn-outline-success");
-    }, 1500);
-  }
-}
 // dashboard.js
 
 async function updateCounts() {
