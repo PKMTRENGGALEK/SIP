@@ -139,6 +139,9 @@ function loadPage(page) {
         case "ruk.html":
           initruk?.();
           break;
+        case "kematian.html":
+          initkemtian?.();
+          break;
         case "ekin.html":
           // initruk?.();
           break;
@@ -270,6 +273,37 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// kematian.js
+async function initkemtian(params) {
+  const copyButton = document.getElementById("copyButton");
+  const externalLink = document.getElementById("externalLink");
+  if (!copyButton || !externalLink) return;
+
+  copyButton.addEventListener("click", function () {
+    const text = externalLink.value;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(showSuccess).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
+
+  function fallbackCopy() {
+    externalLink.select();
+    externalLink.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    showSuccess();
+  }
+
+  function showSuccess() {
+    copyButton.innerHTML = '<i class="fa-solid fa-check me-1"></i>Copied!';
+    copyButton.classList.add("btn-outline-success");
+    setTimeout(() => {
+      copyButton.innerHTML = '<i class="fa-regular fa-copy me-1"></i>Copy';
+      copyButton.classList.remove("btn-outline-success");
+    }, 1500);
+  }
+}
 // dashboard.js
 
 async function updateCounts() {
