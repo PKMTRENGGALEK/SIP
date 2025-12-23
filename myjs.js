@@ -221,13 +221,41 @@ function setActiveMenu(activeLink) {
   });
 }
 
+// document.addEventListener("DOMContentLoaded", function () {
+//   loadPage("dashboard.html");
+
+//   document.querySelectorAll(".nav-link").forEach((link) => {
+//     link.addEventListener("click", function (e) {
+//       const href = this.getAttribute("href");
+//       if (href.endsWith(".html")) {
+//         e.preventDefault();
+//         loadPage(href);
+//         setActiveMenu(this);
+
+//         // Tutup offcanvas jika di mode mobile
+//         const offcanvas = bootstrap.Offcanvas.getInstance(
+//           document.getElementById("sidebarOffcanvas")
+//         );
+//         if (offcanvas) offcanvas.hide();
+//       }
+//     });
+//   });
+// });
 document.addEventListener("DOMContentLoaded", function () {
-  loadPage("dashboard.html");
+  const params = new URLSearchParams(window.location.search);
+  const pageFromUrl = params.get("page");
+
+  if (pageFromUrl) {
+    loadPage(pageFromUrl);
+  } else {
+    loadPage("dashboard.html");
+  }
 
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
-      if (href.endsWith(".html")) {
+
+      if (href && href.endsWith(".html")) {
         e.preventDefault();
         loadPage(href);
         setActiveMenu(this);
