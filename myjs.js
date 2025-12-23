@@ -258,12 +258,13 @@ document.addEventListener("DOMContentLoaded", function () {
     link.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
 
-      if (href && href.endsWith(".html")) {
+      // 🔥 HANDLE INTERNAL PAGE
+      if (href && href.includes("?page=")) {
         e.preventDefault();
-        loadPage(href);
+        const page = new URLSearchParams(href.split("?")[1]).get("page");
+        loadPage(page);
         setActiveMenu(this);
 
-        // Tutup offcanvas jika di mode mobile
         const offcanvas = bootstrap.Offcanvas.getInstance(
           document.getElementById("sidebarOffcanvas")
         );
