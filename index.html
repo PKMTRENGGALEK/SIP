@@ -5,20 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pengalihan Alamat</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Auto Redirect -->
-  <meta http-equiv="refresh" content="5;url=https://sip.puskesmastrenggalek.id">
-
   <style>
-    body {
-      background-image: url('https://cdn.dribbble.com/userupload/41802618/file/original-30bd81eb7c805503b995ab442f08b739.gif');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -29,23 +19,32 @@
         transform: translateY(0);
       }
     }
-
     .animate-fade-in {
       animation: fadeInUp 1s ease-out forwards;
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center relative">
+<body class="relative min-h-screen overflow-hidden flex items-center justify-center">
+
+  <!-- Video Background -->
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    class="absolute inset-0 w-full h-full object-cover">
+    <source src="https://cdn.dribbble.com/userupload/46110669/file/daa24dc325473cc6c72763b387d227c5.mp4" type="video/mp4">
+  </video>
 
   <!-- Overlay -->
-  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+  <div class="absolute inset-0 bg-black/60"></div>
 
   <!-- Content -->
-  <div class="relative bg-white/90 rounded-2xl shadow-2xl p-8 max-w-lg text-center animate-fade-in">
+  <div class="relative z-10 bg-white/90 backdrop-blur rounded-2xl shadow-2xl p-8 max-w-lg text-center animate-fade-in">
 
     <!-- Icon -->
     <div class="flex justify-center mb-4">
-      <div class="bg-green-100 text-green-600 p-4 rounded-full animate-bounce">
+      <div class="bg-green-100 text-green-600 p-4 rounded-full">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M13 16h-1v-4h-1m1-4h.01M12 18a9 9 0 100-18 9 9 0 000 18z" />
@@ -59,23 +58,40 @@
     </h1>
 
     <!-- Message -->
-    <p class="text-gray-600 mb-6 leading-relaxed">
+    <p class="text-gray-700 mb-6 leading-relaxed">
       Alamat ini <strong>sudah tidak dapat diakses</strong>.<br>
-      Anda akan dialihkan ke sistem resmi
-      <strong>Puskesmas Trenggalek</strong>.
+      Silakan akses sistem resmi melalui:
     </p>
 
-    <!-- Redirect Button -->
+    <!-- Link -->
     <a href="https://sip.puskesmastrenggalek.id"
-       class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition transform hover:scale-105 animate-pulse">
-      Menuju SIP Puskesmas Trenggalek
+       class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition transform hover:scale-105">
+      sip.puskesmastrenggalek.id
     </a>
+  </div>
 
-    <!-- Footer -->
-    <p class="text-sm text-gray-500 mt-6">
-      Pengalihan otomatis dalam 5 detik...
+  <!-- Countdown (tidak menghalangi konten) -->
+  <div class="absolute bottom-6 w-full text-center z-10">
+    <p class="text-white text-sm opacity-80">
+      Anda akan dialihkan dalam <span id="countdown" class="font-bold">5</span> detik...
     </p>
   </div>
+
+  <!-- Countdown Script -->
+  <script>
+    let timeLeft = 5;
+    const countdownEl = document.getElementById('countdown');
+
+    const timer = setInterval(() => {
+      timeLeft--;
+      countdownEl.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        window.location.href = "https://sip.puskesmastrenggalek.id";
+      }
+    }, 1000);
+  </script>
 
 </body>
 </html>
