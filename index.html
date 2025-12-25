@@ -9,22 +9,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    .animate-fade-in {
-      animation: fadeInUp 1s ease-out forwards;
+    .animate-fade {
+      animation: fadeIn 1.2s ease-out forwards;
     }
   </style>
 </head>
-<body class="relative min-h-screen overflow-hidden flex items-center justify-center">
+<body class="relative min-h-screen overflow-hidden">
 
   <!-- Video Background -->
   <video
@@ -36,50 +30,34 @@
     <source src="https://cdn.dribbble.com/userupload/46110669/file/daa24dc325473cc6c72763b387d227c5.mp4" type="video/mp4">
   </video>
 
-  <!-- Overlay -->
-  <div class="absolute inset-0 bg-black/60"></div>
+  <!-- Overlay tipis -->
+  <div class="absolute inset-0 bg-black/40"></div>
 
-  <!-- Content -->
-  <div class="relative z-10 bg-white/90 backdrop-blur rounded-2xl shadow-2xl p-8 max-w-lg text-center animate-fade-in">
+  <!-- Bottom Content -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 animate-fade">
+    <div class="bg-black/55 backdrop-blur-sm px-6 py-4">
 
-    <!-- Icon -->
-    <div class="flex justify-center mb-4">
-      <div class="bg-green-100 text-green-600 p-4 rounded-full">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M12 18a9 9 0 100-18 9 9 0 000 18z" />
-        </svg>
-      </div>
+      <p class="text-center text-sm md:text-base text-gray-200 leading-relaxed">
+        Mohon maaf, alamat ini sudah tidak dapat diakses.
+        Silakan gunakan alamat resmi
+        <a href="https://sip.puskesmastrenggalek.id"
+           class="text-green-400 hover:underline font-medium">
+          sip.puskesmastrenggalek.id
+        </a>
+      </p>
+
+      <p class="text-center text-xs text-gray-300 mt-2">
+        Dialihkan otomatis dalam
+        <span id="countdown" class="font-semibold text-white">10</span>
+        detik
+      </p>
+
     </div>
-
-    <!-- Title -->
-    <h1 class="text-2xl font-bold text-gray-800 mb-2">
-      Mohon Maaf 🙏
-    </h1>
-
-    <!-- Message -->
-    <p class="text-gray-700 mb-6 leading-relaxed">
-      Alamat ini <strong>sudah tidak dapat diakses</strong>.<br>
-      Silakan akses sistem resmi melalui:
-    </p>
-
-    <!-- Link -->
-    <a href="https://sip.puskesmastrenggalek.id"
-       class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition transform hover:scale-105">
-      sip.puskesmastrenggalek.id
-    </a>
-  </div>
-
-  <!-- Countdown (tidak menghalangi konten) -->
-  <div class="absolute bottom-6 w-full text-center z-10">
-    <p class="text-white text-sm opacity-80">
-      Anda akan dialihkan dalam <span id="countdown" class="font-bold">5</span> detik...
-    </p>
   </div>
 
   <!-- Countdown Script -->
   <script>
-    let timeLeft = 5;
+    let timeLeft = 10;
     const countdownEl = document.getElementById('countdown');
 
     const timer = setInterval(() => {
